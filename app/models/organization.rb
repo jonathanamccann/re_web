@@ -2,8 +2,8 @@ class Organization < ActiveRecord::Base
     has_one :organization_settings, :dependent => :destroy
     has_many :users
     has_many :properties
-    has_many :payments
-    has_many :notices
+    #has_many :app_payments
+    #has_many :notices
     validates_presence_of :name,
                           :phone,
                           :state,

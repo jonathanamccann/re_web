@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141202032350) do
+ActiveRecord::Schema.define(version: 20141202033935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,9 +27,24 @@ ActiveRecord::Schema.define(version: 20141202032350) do
 
   create_table "organizations", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "phone"
+    t.string   "state"
+    t.string   "street_address"
+    t.string   "zip"
+    t.string   "email"
+    t.string   "is_enabled"
   end
+
+  create_table "payments", force: true do |t|
+    t.integer  "property_id"
+    t.integer  "amount"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "payments", ["property_id"], name: "index_payments_on_property_id", using: :btree
 
   create_table "posts", force: true do |t|
     t.text     "content"
@@ -41,6 +56,16 @@ ActiveRecord::Schema.define(version: 20141202032350) do
 
   add_index "posts", ["user_id", "created_at"], name: "index_posts_on_user_id_and_created_at", using: :btree
   add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
+
+  create_table "properties", force: true do |t|
+    t.integer  "organization_id"
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "properties", ["organization_id"], name: "index_properties_on_organization_id", using: :btree
 
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"
@@ -73,5 +98,18 @@ ActiveRecord::Schema.define(version: 20141202032350) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["organization_id"], name: "index_users_on_organization_id", using: :btree
 
+  create_table "versions", force: true do |t|
+    t.string   "item_type",  null: false
+    t.integer  "item_id",    null: false
+    t.string   "event",      null: false
+    t.string   "whodunnit"
+    t.text     "object"
+    t.datetime "created_at"
+  end
+
+  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
+
   add_foreign_key "organization_app_settings", "organizations"
+  add_foreign_key "payments", "properties"
+  add_foreign_key "properties", "organizations"
 end

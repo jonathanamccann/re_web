@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :properties
+
   resources :organizations
 
   root                'static_pages#home'
