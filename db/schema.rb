@@ -11,10 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141111214811) do
+ActiveRecord::Schema.define(version: 20141202032350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "organization_app_settings", force: true do |t|
+    t.integer  "organization_id"
+    t.string   "default_from_email"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "organization_app_settings", ["organization_id"], name: "index_organization_app_settings_on_organization_id", using: :btree
+
+  create_table "organizations", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "posts", force: true do |t|
     t.text     "content"
@@ -52,8 +67,11 @@ ActiveRecord::Schema.define(version: 20141111214811) do
     t.datetime "activated_at"
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
+    t.integer  "organization_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["organization_id"], name: "index_users_on_organization_id", using: :btree
 
+  add_foreign_key "organization_app_settings", "organizations"
 end
