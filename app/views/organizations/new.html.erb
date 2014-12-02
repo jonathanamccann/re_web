@@ -1,5 +1,30 @@
+<% provide(:title, 'New Organization') %>
 <h1>New Organization</h1>
 
-<%= render 'form' %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@organization) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
 
-<%= link_to 'Back', organizations_path %>
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>
+
+        <%= f.label :email %>
+        <%= f.text_field :email, class: 'form-control' %>
+
+        <%= f.label :phone %>
+        <%= f.phone_field :phone, class: 'form-control' %>
+
+        <%= f.label :state %>
+        <%= f.text_field :state, class: 'form-control' %>
+
+        <%= f.label :street_address %>
+        <%= f.text_field :street_address, class: 'form-control' %>
+
+        <%= f.label :zip %>
+        <%= f.text_field :zip, class: 'form-control' %>
+
+        <%= f.submit "Create my account", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

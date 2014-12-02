@@ -1,21 +1,27 @@
-<%= form_for(@organization) do |f| %>
-  <% if @organization.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@organization.errors.count, "error") %> prohibited this organization from being saved:</h2>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@organization) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
 
-      <ul>
-      <% @organization.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+        <%= f.label :email %>
+        <%= f.text_field :email, class: 'form-control' %>
+
+        <%= f.label :phone %>
+        <%= f.phone_field :phone, class: 'form-control' %>
+
+        <%= f.label :state %>
+        <%= f.text_field :state, class: 'form-control' %>
+
+        <%= f.label :street_address %>
+        <%= f.text_field :street_address, class: 'form-control' %>
+
+        <%= f.label :zip %>
+        <%= f.text_field :zip, class: 'form-control' %>
+
+        <%= f.submit "Create my account", class: "btn btn-primary" %>
+    <% end %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

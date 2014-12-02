@@ -28,6 +28,7 @@ class OrganizationsController < ApplicationController
 
     respond_to do |format|
       if @organization.save
+        current_user.update(organization_id: @organization.id)
         format.html { redirect_to @organization, notice: 'Organization was successfully created.' }
         format.json { render :show, status: :created, location: @organization }
       else
@@ -69,6 +70,6 @@ class OrganizationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def organization_params
-      params.require(:organization).permit(:name)
+      params.require(:organization).permit(:name, :email, :phone, :street_address, :zip, :state)
     end
 end

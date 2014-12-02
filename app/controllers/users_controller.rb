@@ -3,6 +3,8 @@ class UsersController < ApplicationController
                                         :following, :followers]
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
+  before_action :verify_organization, only: [:index, :show, :edit, :update,
+                                             :destroy, :following, :followers]
   
   def index
     @users = User.paginate(page: params[:page])
@@ -17,7 +19,7 @@ class UsersController < ApplicationController
     @user = User.new
   end
   
-  def create
+  def create(options = {})
     @user = User.new(user_params)
     if @user.save
       @user.send_activation_email
@@ -78,5 +80,10 @@ class UsersController < ApplicationController
     # Confirms an admin user.
     def admin_user
       redirect_to(root_url) unless current_user.admin?
+    end
+
+    # Confirms an organization id.
+    def verify_organization
+      redirect_to(new_organization_url) unless current_user.organization_id
     end
 end
