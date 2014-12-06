@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  belongs_to :roleable, :polymorphic => true
+
   has_one :organization
   has_many :posts, dependent: :destroy
   has_many :active_relationships, class_name:  "Relationship",
@@ -12,13 +14,29 @@ class User < ActiveRecord::Base
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email
   before_create :create_activation_digest
-  validates :name,  presence: true, length: { maximum: 50 }
+  validates :first_name,  presence: true, length: { maximum: 50 }
+  validates :last_name,  presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   has_secure_password
   validates :password, length: { minimum: 6 }, allow_blank: true
+
+  ROLES = %w[teacher principal admin reweb]
+
+  def role?(base_role)
+    return false if role.nil?
+    ROLES.index(base_role.to_s) <= ROLES.index(role)
+  end
+
+  def name()
+    self.first_name + ' ' + self.last_name
+  end
+
+  def self.roles
+    ROLES.to_a.collect{|r| r}
+  end
 
   # Returns the hash digest of the given string.
   def User.digest(string)

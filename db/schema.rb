@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141202033935) do
+ActiveRecord::Schema.define(version: 20141202215758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,14 +37,17 @@ ActiveRecord::Schema.define(version: 20141202033935) do
     t.string   "is_enabled"
   end
 
-  create_table "payments", force: true do |t|
-    t.integer  "property_id"
-    t.integer  "amount"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "owners", force: true do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "payments", ["property_id"], name: "index_payments_on_property_id", using: :btree
+  create_table "parents", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "posts", force: true do |t|
     t.text     "content"
@@ -57,16 +60,6 @@ ActiveRecord::Schema.define(version: 20141202033935) do
   add_index "posts", ["user_id", "created_at"], name: "index_posts_on_user_id_and_created_at", using: :btree
   add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
 
-  create_table "properties", force: true do |t|
-    t.integer  "organization_id"
-    t.string   "title"
-    t.text     "description"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
-  add_index "properties", ["organization_id"], name: "index_properties_on_organization_id", using: :btree
-
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"
     t.integer  "followed_id"
@@ -78,8 +71,30 @@ ActiveRecord::Schema.define(version: 20141202033935) do
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
 
+  create_table "schools", force: true do |t|
+    t.integer  "organization_id"
+    t.text     "name"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "schools", ["organization_id"], name: "index_schools_on_organization_id", using: :btree
+
+  create_table "students", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "teachers", force: true do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: true do |t|
-    t.string   "name"
+    t.string   "first_name"
+    t.string   "last_name"
     t.string   "email"
     t.string   "role"
     t.datetime "created_at",                        null: false
@@ -93,10 +108,13 @@ ActiveRecord::Schema.define(version: 20141202033935) do
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
     t.integer  "organization_id"
+    t.integer  "roleable_id"
+    t.string   "roleable_type"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["organization_id"], name: "index_users_on_organization_id", using: :btree
+  add_index "users", ["roleable_type", "roleable_id"], name: "index_users_on_roleable_type_and_roleable_id", using: :btree
 
   create_table "versions", force: true do |t|
     t.string   "item_type",  null: false
@@ -110,6 +128,4 @@ ActiveRecord::Schema.define(version: 20141202033935) do
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
   add_foreign_key "organization_app_settings", "organizations"
-  add_foreign_key "payments", "properties"
-  add_foreign_key "properties", "organizations"
 end

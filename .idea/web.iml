@@ -185,7 +185,6 @@
     <orderEntry type="library" scope="PROVIDED" name="net-scp (v1.2.1, RVM: ruby-2.1.4 [re_web]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="net-ssh (v2.9.1, RVM: ruby-2.1.4 [re_web]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="nokogiri (v1.6.5, RVM: ruby-2.1.4 [re_web]) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="paper_trail (v3.0.6, RVM: ruby-2.1.4 [re_web]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="pg (v0.17.1, RVM: ruby-2.1.4 [re_web]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="pry (v0.10.1, RVM: ruby-2.1.4 [re_web]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack (v1.6.0.beta2, RVM: ruby-2.1.4 [re_web]) [gem]" level="application" />

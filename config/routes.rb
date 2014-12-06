@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
-  resources :properties
+  resources :owners
+
+  resources :parents
+
+  resources :students
+
+  resources :teachers
+
+  resources :schools
 
   resources :organizations
 
@@ -7,7 +15,7 @@ Rails.application.routes.draw do
   get    'help'    => 'static_pages#help'
   get    'about'   => 'static_pages#about'
   get    'contact' => 'static_pages#contact'
-  get    'signup'  => 'users#new'
+  get    'signup' => 'users#new', :user => { :roleable_type => 'owner' }
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'

@@ -7,10 +7,12 @@ User.create!(name:  "Jonathan McCann",
              activated:    true,
              activated_at: Time.zone.now)
 99.times do |n|
-  name  = Faker::Name.name
+  first_name  = Faker::Name.first_name
+  last_name  = Faker::Name.last_name
   email = "example-#{n+1}@reweb.com"
   password = "password"
-  User.create!(name:  name,
+  User.create!(first_name:  first_name,
+               last_name:  last_name,
                email: email,
                password:              password,
                password_confirmation: password,

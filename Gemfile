@@ -35,6 +35,4 @@ group :production do
   gem 'unicorn'
 end
 
-gem 'paper_trail'
-
 ruby '2.1.4'

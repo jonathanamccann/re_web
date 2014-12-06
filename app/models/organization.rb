@@ -1,7 +1,7 @@
 class Organization < ActiveRecord::Base
     has_one :organization_settings, :dependent => :destroy
     has_many :users, dependent: :destroy
-    has_many :properties, dependent: :destroy
+    has_many :scrools, dependent: :destroy
     #has_many :app_payments
     #has_many :notices
     validates_presence_of :name,

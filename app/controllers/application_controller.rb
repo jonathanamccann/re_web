@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_organization_id
 
-  def user_is_demo
+  def organization_is_demo
     current_organization_id == organization.demo_id
   end
 end

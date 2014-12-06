@@ -10,7 +10,7 @@
         <%= f.text_field :name, class: 'form-control' %>
 
         <%= f.label :email %>
-        <%= f.text_field :email, class: 'form-control' %>
+        <%= f.text_field :email, class: 'form-control', value: current_user.email %>
 
         <%= f.label :phone %>
         <%= f.phone_field :phone, class: 'form-control' %>
