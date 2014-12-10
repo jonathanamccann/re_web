@@ -1,5 +1,5 @@
 class OwnersController < ApplicationController
-  before_action :set_owner, only: [:show, :edit, :update, :destroy]
+  before_action :set_owner, only: [:show, :home, :edit, :update, :destroy]
 
   # GET /owners
   # GET /owners.json
@@ -10,6 +10,11 @@ class OwnersController < ApplicationController
   # GET /owners/1
   # GET /owners/1.json
   def show
+  end
+
+  def home
+    puts @owner
+    puts 'TEST3'
   end
 
   # GET /owners/new
@@ -64,7 +69,9 @@ class OwnersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_owner
-      @owner = Owner.find(params[:id])
+      if current_user.roleable_type === 'Owner'
+        @owner = Owner.find(current_user.roleable_id)
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

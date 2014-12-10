@@ -64,7 +64,9 @@ class ParentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_parent
-      @parent = Parent.find(params[:id])
+      if current_user.roleable_type === 'Parent'
+        @parent = Parent.find(current_user.roleable_id)
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

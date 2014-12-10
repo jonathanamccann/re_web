@@ -64,7 +64,9 @@ class TeachersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_teacher
-      @teacher = Teacher.find(params[:id])
+      if current_user.roleable_type === 'Teacher'
+        @teacher = Teacher.find(current_user.roleable_id)
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

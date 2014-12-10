@@ -18,8 +18,6 @@ class UsersController < ApplicationController
   end
   
   def new
-    puts params
-    puts 'TESTING'
     @user = User.new
     @user.roleable_type = params[:user][:roleable_type]
   end

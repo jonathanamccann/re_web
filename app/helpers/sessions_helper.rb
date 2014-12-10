@@ -54,6 +54,11 @@ module SessionsHelper
     redirect_to(session[:forwarding_url] || default)
     session.delete(:forwarding_url)
   end
+
+  # Redirects to a roleable_type
+  def redirect_to_type(type)
+    redirect_to send("#{type.downcase}_home_path")
+  end
   
   # Stores the URL trying to be accessed.
   def store_location
