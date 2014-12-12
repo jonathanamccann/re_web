@@ -21,12 +21,16 @@ Rails.application.routes.draw do
   delete 'logout'  => 'sessions#destroy'
 
   get    '/home/owner/', to: 'owners#home', as: 'owner_home'
+  get    '/home/student/', to: 'students#home', as: 'student_home'
+  get    '/home/parent/', to: 'parents#home', as: 'parent_home'
+  get    '/home/teacher/', to: 'teachers#home', as: 'teacher_home'
 
   resources :users do
     member do
       get :following, :followers
     end
   end
+
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
   resources :posts,               only: [:create, :destroy]
